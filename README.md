@@ -1,3 +1,5 @@
 # ticket-system-stage-2
 
-Invite Link to Jira Project: https://id.atlassian.com/invite/p/jira-software?id=KbGU6QAdRAqpNJohyE5Axw
+## Project Management Board Invite Link
+
+A link to the project management board (Jira) for this project can be found [here](https://id.atlassian.com/invite/p/jira-software?id=KbGU6QAdRAqpNJohyE5Axw)
