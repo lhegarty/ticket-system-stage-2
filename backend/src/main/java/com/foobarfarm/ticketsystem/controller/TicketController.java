@@ -16,16 +16,26 @@ public class TicketController {
 
     @RequestMapping("/getAllTickets")
     public ResponseEntity<List<Ticket>> getAllTickets() {
-        return new ResponseEntity<List<Ticket>>(this.ticketService.getAllTickets(), HttpStatus.OK);
+        return this.ticketService.getAllTickets();
     }
 
     @RequestMapping("/getTicketById/{id}")
     public ResponseEntity<Ticket> getTicketById(@PathVariable Long id) {
-        return new ResponseEntity<Ticket>(this.ticketService.getTicketById(id), HttpStatus.OK);
+        return this.ticketService.getTicketById(id);
     }
 
     @PostMapping("/createTicket")
-    public ResponseEntity<Object> createTicket(@RequestBody Ticket ticket) {
+    public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
         return this.ticketService.createTicket(ticket);
+    }
+
+    @PutMapping("/updateTicket/{id}")
+    public ResponseEntity<Ticket> updateTicket(@RequestBody Ticket ticket, @PathVariable Long id) {
+        return this.ticketService.updateTicket(ticket, id);
+    }
+
+    @DeleteMapping("/deleteTicket/{id}")
+    public ResponseEntity<Ticket> deleteTicket(@PathVariable Long id) {
+        return this.ticketService.deleteTicket(id);
     }
 }

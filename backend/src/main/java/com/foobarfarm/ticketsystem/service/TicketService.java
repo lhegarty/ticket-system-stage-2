@@ -8,6 +8,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TicketService {
@@ -17,20 +18,51 @@ public class TicketService {
         this.repository = repository;
     }
 
-    public ResponseEntity<Object> createTicket(Ticket ticket) {
+    public ResponseEntity<Ticket> createTicket(Ticket ticket) {
         Ticket createdTicket = this.repository.save(ticket);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(createdTicket.getId()).toUri();
 
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(ticket);
     }
 
-    public List<Ticket> getAllTickets() {
-        return this.repository.findAll();
+    public ResponseEntity<List<Ticket>> getAllTickets() {
+        List<Ticket> ticketList = this.repository.findAll();
+
+        return !ticketList.isEmpty() ? ResponseEntity.ok(ticketList) : ResponseEntity.notFound().build();
     }
 
-    public Ticket getTicketById(Long id) {
-        //change
-        return this.repository.findById(id).get();
+    public ResponseEntity<Ticket> getTicketById(Long id) {
+        Optional<Ticket> ticketOptional = this.repository.findById(id);
+
+        if (!ticketOptional.isPresent())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok().body(ticketOptional.get());
+    }
+
+    public ResponseEntity<Ticket> updateTicket(Ticket ticket, Long id) {
+        Optional<Ticket> ticketOptional = this.repository.findById(id);
+
+        if (!ticketOptional.isPresent())
+            return ResponseEntity.notFound().build();
+
+        ticket.setId(id);
+
+        Ticket updatedTicket = this.repository.save(ticket);
+
+        return ResponseEntity.ok().body(updatedTicket);
+    }
+
+    public ResponseEntity deleteTicket(Long id) {
+        Optional<Ticket> ticketOptional = this.repository.findById(id);
+
+        if (!ticketOptional.isPresent())
+            return ResponseEntity.notFound().build();
+        
+        this.repository.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }

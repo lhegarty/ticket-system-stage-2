@@ -15,4 +15,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     @Override
     Ticket save(Ticket ticket);
+
+    @Override
+    void deleteById(Long aLong);
 }
