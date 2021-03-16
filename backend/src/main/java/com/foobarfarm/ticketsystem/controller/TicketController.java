@@ -10,16 +10,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class TicketController {
     @Autowired
     private TicketService ticketService;
 
-    @RequestMapping("/getAllTickets")
+    @GetMapping("/getAllTickets")
     public ResponseEntity<List<Ticket>> getAllTickets() {
         return this.ticketService.getAllTickets();
     }
 
-    @RequestMapping("/getTicketById/{id}")
+    @GetMapping("/getTicketById/{id}")
     public ResponseEntity<Ticket> getTicketById(@PathVariable Long id) {
         return this.ticketService.getTicketById(id);
     }
