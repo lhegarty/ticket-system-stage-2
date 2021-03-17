@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import Ticket from "../Ticket/Ticket";
 import LoadingSpinner from "./loading-buffering.gif";
@@ -17,35 +18,53 @@ export default class TicketOverview extends React.Component {
      */
     componentDidMount() {
         // fetch recipes
-        this.fetchAllTickets();
+        this.useAxiosToFetchTickets();
     }
 
-    async fetchAllTickets() {        
-        const requestUrl = `${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/getAllTickets`;
+    async useAxiosToFetchTickets() {
+        axios.get(
+            `${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/getAllTickets`,
+            { timeout: 1000 }
+        )
+            .then(response => {
+                this.setState({
+                    isFetchingTickets: false,
+                    tickets: response.data
+                });
+            })
+            .catch(error => {
+                console.error(error);
 
-        const tickets = await fetch(requestUrl);
+                this.setState({
+                    isFetchingTickets: false
+                });
+            })
+    }
 
-        await tickets.json().then((result) => {
-            console.log(result)
-            this.setState({
-                isFetchingTickets: false, 
-                tickets: result
-             });
-        });
+    renderTickets() {
+        if (this.state.tickets.length) {
+            return (<>
+                <h2>Tickets:</h2>
+                {
+                    this.state.tickets.map((ticket) => {
+                        return <Ticket data={ticket} key={ticket.id} />
+                    })
+                }</>
+            )
+        } else {
+            return <p>No Tickets Found.</p>
+        }
     }
 
     render() {
         return (
-            <div>
-                <h2>
-                    {this.state.isFetchingTickets
-                        ? <img src={LoadingSpinner}></img>
-                        : "Tickets:"}
-                </h2>
-                {this.state.tickets.map((ticket) => {
-                    return <Ticket data={ticket} key={ticket.id}/>;
-                })}
-            </div>
+            <>
+                <div>
+                    {this.state.isFetchingTickets ? <img src={LoadingSpinner}></img> : ''}
+
+                    {this.renderTickets()}
+                </div>
+            </>
         );
     }
 }

@@ -11,7 +11,6 @@ export default class Ticket extends React.Component {
     render() {
         return (
             <>
-            <h1></h1>
             <div>{this.state.data.id}</div>
             <div>{this.state.data.ticketAuthor}</div>
             <div>{this.state.data.ticketTitle}</div>
