@@ -1,4 +1,5 @@
 import React from "react";
+import Card from 'react-bootstrap/Card';
 
 export default class Ticket extends React.Component {
     // pass in ticket data
@@ -10,14 +11,20 @@ export default class Ticket extends React.Component {
 
     render() {
         return (
-            <>
-            <div>{this.state.data.id}</div>
-            <div>{this.state.data.ticketAuthor}</div>
-            <div>{this.state.data.ticketTitle}</div>
-            <div>{this.state.data.timestamp}</div>
-            <div>{this.state.data.ticketStatus}</div>
-            <div>{this.state.data.issueDescription}</div>
-            </>
+                
+                <div className="cardContainer">
+                    <Card style={{ width: '18rem', margin: '10px' }}>
+                        <Card.Body>
+                            <Card.Title>{this.state.data.ticketTitle}</Card.Title>
+                            <Card.Subtitle className="mb-2 text-muted">{this.state.data.ticketAuthor}</Card.Subtitle>
+                            <Card.Text>
+                                {this.state.data.issueDescription}
+                        </Card.Text>
+                            <Card.Link href="#">Delete Issue</Card.Link>
+                            <Card.Link href="#">Edit Issue</Card.Link>
+                        </Card.Body>
+                    </Card>
+                </div>
         );
     }
 }
