@@ -3,13 +3,12 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import './CreateTicketForm.scss';
-import { WithRouter, Redirect } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+const TICKET_CREATE_SUCCESS_MESSAGE = 'Ticket created successfully';
+const TICKET_CREATE_ERROR_MESSAGE = 'Ticket could not be created';
 
 export default class CreateTicketForm extends React.Component {
-    constructor() {
-        super();
-    }
-
     createTicket = (e) => {
         const form = e.currentTarget;
         e.preventDefault();
@@ -31,14 +30,22 @@ export default class CreateTicketForm extends React.Component {
             )
             .then((response) => {
                 console.log(response);
+
                 // show toast
+                if (response.status === 201) {
+                    toast.success(TICKET_CREATE_SUCCESS_MESSAGE);
+                } else {
+                    toast.error(TICKET_CREATE_ERROR_MESSAGE);
+                }
 
                 // take back to homepage
                 this.props.history.push('/');
             })
             .catch((error) => {
                 console.error(error);
-                // show toast...
+
+                // show toast
+                toast.error(TICKET_CREATE_ERROR_MESSAGE);
             });
     };
 
