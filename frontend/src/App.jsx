@@ -2,7 +2,7 @@ import './App.css';
 import TicketOverview from './components/TicketOverview/TicketOverview';
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import CreateTicketForm from './components/CreateTicketForm/CreateTicketForm';
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 function App() {
     return (
@@ -15,7 +15,6 @@ function App() {
                     <Route path="/create" component={CreateTicketForm} />
                 </Switch>
             </BrowserRouter>
-
         </div>
     );
 }

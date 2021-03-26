@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import axios from "axios";
-import "./CreateTicketForm.scss";
-import { WithRouter, Redirect } from "react-router-dom";
+import axios from 'axios';
+import './CreateTicketForm.scss';
+import { WithRouter, Redirect } from 'react-router-dom';
 
 export default class CreateTicketForm extends React.Component {
     constructor() {
@@ -20,35 +20,41 @@ export default class CreateTicketForm extends React.Component {
             ticketTitle: form.ticketTitle.value,
             timestamp: new Date().toISOString(),
             ticketStatus: form.ticketStatus.value,
-            issueDescription: form.ticketDescription.value
-        }
+            issueDescription: form.ticketDescription.value,
+        };
 
-        axios.post(
-            `${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/createTicket`,
-            formData,
-            { timeout: 1000 }
-        )
-            .then(response => {
+        axios
+            .post(
+                `${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/createTicket`,
+                formData,
+                { timeout: 1000 }
+            )
+            .then((response) => {
                 console.log(response);
                 // show toast
 
                 // take back to homepage
-                this.props.history.push("/");
+                this.props.history.push('/');
             })
-            .catch(error => {
+            .catch((error) => {
                 console.error(error);
                 // show toast...
             });
-    }
+    };
 
     render() {
         return (
             <div id="formWrapper">
                 <div id="formTitle">
-                    <h2>Create Ticket</h2><span><span className="required">*</span> Required Information</span>
+                    <h2>Create Ticket</h2>
+                    <span>
+                        <span className="required">*</span> Required Information
+                    </span>
                 </div>
                 <Form onSubmit={this.createTicket}>
-                    <Form.Label>Ticket Author <span className="required">*</span></Form.Label>
+                    <Form.Label>
+                        Ticket Author <span className="required">*</span>
+                    </Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Author Name"
@@ -56,7 +62,9 @@ export default class CreateTicketForm extends React.Component {
                         required
                     />
 
-                    <Form.Label>Ticket Title <span className="required">*</span></Form.Label>
+                    <Form.Label>
+                        Ticket Title <span className="required">*</span>
+                    </Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Ticket Title"
@@ -64,7 +72,9 @@ export default class CreateTicketForm extends React.Component {
                         required
                     />
 
-                    <Form.Label>Ticket Status <span className="required">*</span></Form.Label>
+                    <Form.Label>
+                        Ticket Status <span className="required">*</span>
+                    </Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Ticket Status"
@@ -72,7 +82,9 @@ export default class CreateTicketForm extends React.Component {
                         required
                     />
 
-                    <Form.Label>Ticket Description <span className="required">*</span></Form.Label>
+                    <Form.Label>
+                        Ticket Description <span className="required">*</span>
+                    </Form.Label>
                     <Form.Control
                         as="textarea"
                         rows={3}

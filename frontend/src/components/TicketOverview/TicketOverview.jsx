@@ -1,10 +1,10 @@
-import axios from "axios";
-import React from "react";
-import Ticket from "../Ticket/Ticket";
+import axios from 'axios';
+import React from 'react';
+import Ticket from '../Ticket/Ticket';
 import TicketModal from '../TicketModal/TicketModal';
 import Toast from 'react-bootstrap/Toast';
-import LoadingSpinner from "./loading-buffering.gif";
-import "./TicketOverview.scss";
+import LoadingSpinner from './loading-buffering.gif';
+import './TicketOverview.scss';
 
 export default class TicketOverview extends React.Component {
     constructor() {
@@ -13,7 +13,7 @@ export default class TicketOverview extends React.Component {
         this.state = {
             isFetchingTickets: true,
             tickets: [],
-            toasts: []
+            toasts: [],
         };
     }
 
@@ -26,60 +26,66 @@ export default class TicketOverview extends React.Component {
     }
 
     async fetchTickets() {
-        axios.get(
-            `${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/getAllTickets`,
-            { timeout: 1000 }
-        )
-            .then(response => {
+        axios
+            .get(
+                `${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/getAllTickets`,
+                { timeout: 1000 }
+            )
+            .then((response) => {
                 this.setState({
                     isFetchingTickets: false,
-                    tickets: response.data
+                    tickets: response.data,
                 });
             })
-            .catch(error => {
+            .catch((error) => {
                 console.error(error);
 
                 this.setState({
-                    isFetchingTickets: false
+                    isFetchingTickets: false,
                 });
-            })
+            });
     }
 
     displayToast = () => {
         this.state.toasts.push(
             <Toast>
                 <Toast.Header>
-                    <img src="holder.js/20x20?text=%20" className="rounded mr-2" alt="" />
+                    <img
+                        src="holder.js/20x20?text=%20"
+                        className="rounded mr-2"
+                        alt=""
+                    />
                     <strong className="mr-auto">Bootstrap</strong>
                     <small>just now</small>
                 </Toast.Header>
                 <Toast.Body>See? Just like this.</Toast.Body>
             </Toast>
         );
-    }
+    };
 
     renderTickets() {
         if (this.state.tickets.length) {
-            return (<>
-                {/* <TicketModal /> */}
+            return (
+                <>
+                    {/* <TicketModal /> */}
 
-                <h2>Tickets:</h2>
+                    <h2>Tickets:</h2>
 
-                <div className="ticketContainer">
-                    {
-                        this.state.tickets.map((ticket) => {
-                            return <Ticket
-                                data={ticket}
-                                key={ticket.id}
-                                toastCallback={this.displayToast}
-                            />
-                        })
-                    }
-                </div>
-            </>
-            )
+                    <div className="ticketContainer">
+                        {this.state.tickets.map((ticket) => {
+                            return (
+                                <Ticket
+                                    data={ticket}
+                                    key={ticket.id}
+                                    toastCallback={this.displayToast}
+                                />
+                            );
+                        })}
+                    </div>
+                </>
+            );
         } else {
-            return <p>No Tickets Found.</p>
+            return <p>No Tickets Found.</p>;
         }
     }
 
@@ -87,7 +93,11 @@ export default class TicketOverview extends React.Component {
         return (
             <>
                 <div>
-                    {this.state.isFetchingTickets ? <img src={LoadingSpinner}></img> : this.renderTickets()}
+                    {this.state.isFetchingTickets ? (
+                        <img src={LoadingSpinner}></img>
+                    ) : (
+                        this.renderTickets()
+                    )}
                 </div>
             </>
         );
