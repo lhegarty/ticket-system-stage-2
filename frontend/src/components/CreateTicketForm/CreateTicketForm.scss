@@ -1,0 +1,25 @@
+div#formWrapper {
+    width: 50%;
+    margin: auto;
+
+    div#formTitle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    span.required {
+        color: red;
+    }
+
+    form {
+        label {
+            float: left;
+            margin-top: 30px;
+        }
+
+        button {
+            margin-top: 30px;
+        }
+    }
+}
