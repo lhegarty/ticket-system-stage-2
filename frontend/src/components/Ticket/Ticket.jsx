@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
-const TICKET_DELETE_SUCCESS_MESSAGE = 'Ticket Deleted successfully';
+const TICKET_DELETE_SUCCESS_MESSAGE = 'Ticket deleted successfully';
 const TICKET_DELETE_ERROR_MESSAGE = 'Ticket could not be deleted';
 
 export default class Ticket extends React.Component {

@@ -2,13 +2,13 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-import './CreateTicketForm.scss';
+import './TicketForm.scss';
 import { toast } from 'react-toastify';
 
 const TICKET_CREATE_SUCCESS_MESSAGE = 'Ticket created successfully';
 const TICKET_CREATE_ERROR_MESSAGE = 'Ticket could not be created';
 
-export default class CreateTicketForm extends React.Component {
+export default class TicketForm extends React.Component {
     createTicket = (e) => {
         const form = e.currentTarget;
         e.preventDefault();
