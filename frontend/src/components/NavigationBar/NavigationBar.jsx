@@ -1,14 +1,9 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import Button from 'react-bootstrap/Button';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default class NavigationBar extends React.Component {
-    constructor() {
-        super();
-    }
-
     render() {
         return (
             <>
