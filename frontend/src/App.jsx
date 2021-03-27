@@ -15,7 +15,8 @@ function App() {
 
                 <Switch>
                     <Route exact path="/" component={TicketOverview} />
-                    <Route path="/create" component={TicketForm} />
+                    <Route path="/create" key='create' component={TicketForm} />
+                    <Route path="/update/:id" key='update' component={TicketForm} />
                 </Switch>
             </BrowserRouter>
         </div>

@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const TICKET_DELETE_SUCCESS_MESSAGE = 'Ticket deleted successfully';
 const TICKET_DELETE_ERROR_MESSAGE = 'Ticket could not be deleted';
@@ -71,6 +72,9 @@ export default class Ticket extends React.Component {
                                 {this.state.data.ticketAuthor}
                             </Card.Subtitle>
                             <Card.Text>
+                                {this.state.data.ticketStatus}
+                            </Card.Text>
+                            <Card.Text>
                                 {this.state.data.issueDescription}
                             </Card.Text>
                             <Card.Text>
@@ -78,12 +82,17 @@ export default class Ticket extends React.Component {
                                 {this.formatDate(this.state.data.timestamp)}
                             </Card.Text>
                             <Card.Link
-                                href="#"
+                                style={{cursor: "pointer"}}
                                 onClick={() => this.toggleModal(true)}
                             >
                                 Delete Ticket
                             </Card.Link>
-                            <Card.Link href="#">Edit Ticket</Card.Link>
+                            <Link
+                                to={`/update/${this.state.data.id}`}
+                                className="card-link"
+                            >
+                                Update Ticket
+                            </Link>
                         </Card.Body>
                     </Card>
                 </div>
