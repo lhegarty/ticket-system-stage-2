@@ -82,7 +82,7 @@ export default class Ticket extends React.Component {
                                 {this.formatDate(this.state.data.timestamp)}
                             </Card.Text>
                             <Card.Link
-                                style={{cursor: "pointer"}}
+                                style={{ cursor: 'pointer' }}
                                 onClick={() => this.toggleModal(true)}
                             >
                                 Delete Ticket

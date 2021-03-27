@@ -120,13 +120,6 @@ export default class TicketForm extends React.Component {
             });
     }
 
-    isTicketDataNonEmpty = () => {
-        return (
-            this.state.ticketData &&
-            Object.keys(this.state.ticketData).length > 0
-        );
-    };
-
     render() {
         return (
             <div id="formWrapper">
