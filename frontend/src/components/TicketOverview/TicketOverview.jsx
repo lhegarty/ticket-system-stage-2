@@ -1,8 +1,6 @@
 import axios from 'axios';
 import React from 'react';
 import Ticket from '../Ticket/Ticket';
-import TicketModal from '../TicketModal/TicketModal';
-import Toast from 'react-bootstrap/Toast';
 import LoadingSpinner from './loading-buffering.gif';
 import './TicketOverview.scss';
 
@@ -12,8 +10,7 @@ export default class TicketOverview extends React.Component {
 
         this.state = {
             isFetchingTickets: true,
-            tickets: [],
-            toasts: [],
+            tickets: {},
         };
     }
 
@@ -32,9 +29,16 @@ export default class TicketOverview extends React.Component {
                 { timeout: 1000 }
             )
             .then((response) => {
+                let tickets = {};
+
+                // id: {data}
+                for (let ticket of response.data) {
+                    tickets[ticket.id] = ticket;
+                }
+
                 this.setState({
                     isFetchingTickets: false,
-                    tickets: response.data,
+                    tickets: tickets,
                 });
             })
             .catch((error) => {
@@ -46,38 +50,32 @@ export default class TicketOverview extends React.Component {
             });
     }
 
-    displayToast = () => {
-        this.state.toasts.push(
-            <Toast>
-                <Toast.Header>
-                    <img
-                        src="holder.js/20x20?text=%20"
-                        className="rounded mr-2"
-                        alt=""
-                    />
-                    <strong className="mr-auto">Bootstrap</strong>
-                    <small>just now</small>
-                </Toast.Header>
-                <Toast.Body>See? Just like this.</Toast.Body>
-            </Toast>
-        );
+    removeTicketFromState = (id) => {
+        let tempTickets = this.state.tickets;
+        let isFetching = this.state.isFetchingTickets;
+
+        delete tempTickets[id];
+
+        this.setState({
+            isFetchingTickets: isFetching,
+            tickets: tempTickets,
+        });
     };
 
-    renderTickets() {
-        if (this.state.tickets.length) {
+    renderTickets = () => {
+        if (Object.values(this.state.tickets).length) {
             return (
                 <>
-                    {/* <TicketModal /> */}
-
                     <h2>Tickets:</h2>
-
                     <div className="ticketContainer">
-                        {this.state.tickets.map((ticket) => {
+                        {Object.values(this.state.tickets).map((ticket) => {
                             return (
                                 <Ticket
                                     data={ticket}
                                     key={ticket.id}
-                                    toastCallback={this.displayToast}
+                                    removeTicketFromState={
+                                        this.removeTicketFromState
+                                    }
                                 />
                             );
                         })}
@@ -87,14 +85,14 @@ export default class TicketOverview extends React.Component {
         } else {
             return <p>No Tickets Found.</p>;
         }
-    }
+    };
 
     render() {
         return (
             <>
                 <div>
                     {this.state.isFetchingTickets ? (
-                        <img src={LoadingSpinner}></img>
+                        <img alt="" src={LoadingSpinner}></img>
                     ) : (
                         this.renderTickets()
                     )}
