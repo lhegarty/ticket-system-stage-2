@@ -5,11 +5,48 @@ import axios from 'axios';
 import './TicketForm.scss';
 import { toast } from 'react-toastify';
 
-const TICKET_CREATE_SUCCESS_MESSAGE = 'Ticket created successfully';
-const TICKET_CREATE_ERROR_MESSAGE = 'Ticket could not be created';
-
+const TICKET_SUCCESS_MESSAGES = {
+    create: 'Ticket created successfully',
+    update: 'Ticket updated successfully',
+};
+const TICKET_ERROR_MESSAGES = {
+    create: 'Ticket could not be created',
+    update: 'Ticket could not be updated',
+};
 export default class TicketForm extends React.Component {
-    createTicket = (e) => {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            mode: this.props.match.url.includes('update') ? 'update' : 'create',
+            id: this.props.match.params.id,
+            ticketData: {},
+        };
+    }
+
+    componentDidMount() {
+        if (this.state.mode === 'update') {
+            this.fetchTicketData(this.state.id);
+        }
+    }
+
+    fetchTicketData = (id) => {
+        axios
+            .get(
+                `${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/getTicketById/${id}`,
+                { timeout: 1000 }
+            )
+            .then((response) => {
+                this.setState({ ticketData: response.data });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+        console.log(this.state);
+    };
+
+    handleSubmit = (e) => {
         const form = e.currentTarget;
         e.preventDefault();
         e.stopPropagation();
@@ -22,6 +59,12 @@ export default class TicketForm extends React.Component {
             issueDescription: form.ticketDescription.value,
         };
 
+        let operation = this.state.mode === 'update' ? this.updateTicket : this.createTicket;
+
+        operation(formData);
+    }
+
+    createTicket = (formData) => {
         axios
             .post(
                 `${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/createTicket`,
@@ -33,9 +76,9 @@ export default class TicketForm extends React.Component {
 
                 // show toast
                 if (response.status === 201) {
-                    toast.success(TICKET_CREATE_SUCCESS_MESSAGE);
+                    toast.success(TICKET_SUCCESS_MESSAGES[this.state.mode]);
                 } else {
-                    toast.error(TICKET_CREATE_ERROR_MESSAGE);
+                    toast.error(TICKET_ERROR_MESSAGES[this.state.mode]);
                 }
 
                 // take back to homepage
@@ -45,20 +88,60 @@ export default class TicketForm extends React.Component {
                 console.error(error);
 
                 // show toast
-                toast.error(TICKET_CREATE_ERROR_MESSAGE);
+                toast.error(TICKET_ERROR_MESSAGES[this.state.mode]);
             });
+    };
+
+    updateTicket = (formData) => {
+        axios
+            .put(
+                `${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/updateTicket/${this.state.id}`,
+                formData,
+                { timeout: 1000 }
+            )
+            .then((response) => {
+                console.log(response);
+
+                // show toast
+                if (response.status === 200) {
+                    toast.success(TICKET_SUCCESS_MESSAGES[this.state.mode]);
+                } else {
+                    toast.error(TICKET_ERROR_MESSAGES[this.state.mode]);
+                }
+
+                // take back to homepage
+                this.props.history.push('/');
+            })
+            .catch((error) => {
+                console.error(error);
+
+                // show toast
+                toast.error(TICKET_ERROR_MESSAGES[this.state.mode]);
+            });
+    }
+
+    isTicketDataNonEmpty = () => {
+        return (
+            this.state.ticketData &&
+            Object.keys(this.state.ticketData).length > 0
+        );
     };
 
     render() {
         return (
             <div id="formWrapper">
                 <div id="formTitle">
-                    <h2>Create Ticket</h2>
+                    <h2>
+                        {`${this.state.mode
+                            .charAt(0)
+                            .toUpperCase()}${this.state.mode.slice(1)}`}{' '}
+                        Ticket
+                    </h2>
                     <span>
                         <span className="required">*</span> Required Information
                     </span>
                 </div>
-                <Form onSubmit={this.createTicket}>
+                <Form onSubmit={this.handleSubmit}>
                     <Form.Label>
                         Ticket Author <span className="required">*</span>
                     </Form.Label>
@@ -66,6 +149,7 @@ export default class TicketForm extends React.Component {
                         type="text"
                         placeholder="Author Name"
                         name="ticketAuthor"
+                        defaultValue={this.state.ticketData.ticketAuthor}
                         required
                     />
 
@@ -76,6 +160,7 @@ export default class TicketForm extends React.Component {
                         type="text"
                         placeholder="Ticket Title"
                         name="ticketTitle"
+                        defaultValue={this.state.ticketData.ticketTitle}
                         required
                     />
 
@@ -85,6 +170,7 @@ export default class TicketForm extends React.Component {
                     <Form.Control
                         type="text"
                         placeholder="Ticket Status"
+                        defaultValue={this.state.ticketData.ticketStatus}
                         name="ticketStatus"
                         required
                     />
@@ -96,12 +182,15 @@ export default class TicketForm extends React.Component {
                         as="textarea"
                         rows={3}
                         placeholder="Ticket Description"
+                        defaultValue={this.state.ticketData.issueDescription}
                         name="ticketDescription"
                         required
                     />
 
                     <Button variant="primary" type="submit">
-                        Submit
+                        {`${this.state.mode
+                            .charAt(0)
+                            .toUpperCase()}${this.state.mode.slice(1)}`}
                     </Button>
                 </Form>
             </div>
