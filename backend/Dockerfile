@@ -23,6 +23,6 @@ WORKDIR /app
 # copy target directory from stage 1
 COPY --from=build-stage /app/target/ ./target
 
-ARG JAR_FILE=./target/*.jar
-COPY ${JAR_FILE} /app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENV JAR_FILE=/app/target/*.jar
+
+ENTRYPOINT java -jar ${JAR_FILE}
