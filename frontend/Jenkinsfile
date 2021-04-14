@@ -13,8 +13,9 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'testing'
-
+                sh 'npm install --prefix ./frontend --silent'
                 sh 'npm test --prefix ./frontend -- --watchAll=false'
+                sh 'rm -r ./frontend/node_modules'
             }
        
         }
