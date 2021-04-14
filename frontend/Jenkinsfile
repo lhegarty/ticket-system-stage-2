@@ -10,7 +10,7 @@ pipeline {
 
                 echo 'Building'
 
-                sh 'docker build -t ticket-frontend frontend/'
+                sh 'docker build -t ticket-frontend .'
             }
         }
 
@@ -19,7 +19,7 @@ pipeline {
                 dir("${env.WORKSPACE}/frontend"){
                     sh "pwd"
                 }
-                
+
                 echo 'testing'
 
                 sh 'npm test -- --watchAll=false'
