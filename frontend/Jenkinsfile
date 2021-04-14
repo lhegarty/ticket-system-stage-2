@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo 'Building'
 
-                sh 'docker build -t ticket-frontend ${env.WORKSPACE}/frontend'
+                sh 'docker build -t ticket-frontend ./frontend'
             }
         }
 
@@ -14,7 +14,7 @@ pipeline {
             steps {
                 echo 'testing'
 
-                sh 'npm test --prefix ${env.WORKSPACE}/frontend -- --watchAll=false'
+                sh 'npm test --prefix ./frontend -- --watchAll=false'
             }
        
         }
