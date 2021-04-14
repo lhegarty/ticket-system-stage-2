@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build and Test') {
+            steps {
+                echo 'Building'
+
+                sh 'docker build -t ticket-backend ./backend'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'deploying'
+            }
+        }
+    }
+}
