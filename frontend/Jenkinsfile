@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building'
+
+                sh 'docker build -t ticket-frontend .'
+            }
+        }
+
+        stage('Test') {
+            echo 'testing'
+
+            sh 'npm test -- --watchAll=false'
+        }
+
+        stage('Deploy') {
+            echo 'deploying'
+        }
+    }
+}
