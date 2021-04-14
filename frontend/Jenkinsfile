@@ -4,14 +4,22 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                dir("${env.WORKSPACE}/frontend"){
+                    sh "pwd"
+                }
+
                 echo 'Building'
 
-                sh 'docker build -t ticket-frontend .'
+                sh 'docker build -t ticket-frontend frontend/'
             }
         }
 
         stage('Test') {
             steps {
+                dir("${env.WORKSPACE}/frontend"){
+                    sh "pwd"
+                }
+                
                 echo 'testing'
 
                 sh 'npm test -- --watchAll=false'
