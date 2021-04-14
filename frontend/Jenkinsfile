@@ -11,13 +11,18 @@ pipeline {
         }
 
         stage('Test') {
-            echo 'testing'
+            steps {
+                echo 'testing'
 
-            sh 'npm test -- --watchAll=false'
+                sh 'npm test -- --watchAll=false'
+            }
+       
         }
 
         stage('Deploy') {
-            echo 'deploying'
+            steps {
+                echo 'deploying'
+            }
         }
     }
 }
