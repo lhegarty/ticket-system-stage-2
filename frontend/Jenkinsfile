@@ -6,7 +6,8 @@ pipeline {
             steps {
                 echo 'Building'
 
-                sh 'docker build -t ticket-frontend ./frontend'
+                sh 'docker build -t ticket-frontend:0.1.0 ./frontend'
+                sh 'docker tag foobarfarm/ticket-frontend:0.1.0 ./frontend'
             }
         }
 
@@ -20,9 +21,19 @@ pipeline {
        
         }
 
+        stage('Push Image to Docker Hub') {
+            steps {
+                echo 'Pushing image to DockerHub'
+
+                withDockerRegistry([ credentialsId: "dockerhub-credentials", url: ""]) {
+                    sh 'docker push foobarfarm/ticket-frontend:0.1.0'
+                }
+            }
+        }
+
         stage('Deploy') {
             steps {
-                echo 'deploying'
+                echo 'Deploying'
             }
         }
     }
