@@ -23,9 +23,12 @@ pipeline {
         stage('Push Image to Docker Hub') {
             steps {
                 echo 'Pushing image to DockerHub'
-                withDockerRegistry([ credentialsId: "dockerhub-credentials", url: "" ]) {
+
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "dockerhub-credentials",
+                usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                    sh 'docker login -u ${USERNAME} -p ${PASSWORD}'
                     sh 'docker push foobarfarm/ticket-frontend:0.1.0'
-                }
+                 }
             }
         }
 
