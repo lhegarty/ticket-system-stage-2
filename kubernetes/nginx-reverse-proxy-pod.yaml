@@ -7,6 +7,6 @@ metadata:
 spec:
   containers:
   - name: nginx-reverse-proxy-container
-    image: foobarfarm/nginx-reverse-proxy:0.1.1
+    image: foobarfarm/nginx-reverse-proxy:0.1.4
     ports:
     - containerPort: 80
