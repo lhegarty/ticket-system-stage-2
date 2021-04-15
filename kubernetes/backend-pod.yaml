@@ -7,9 +7,9 @@ metadata:
 spec:
   containers:
   - name: ticket-backend-container
-    image: foobarfarm/ticket-backend:0.1.0
+    image: foobarfarm/ticket-backend:0.1.1
     ports:
-    - containerPort: 80
+    - containerPort: 8080
     env:
     - name: DB_URI
       value: "foo"
