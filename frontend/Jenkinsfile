@@ -24,9 +24,10 @@ pipeline {
             steps {
                 echo 'Pushing image to DockerHub'
 
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKER_REGISTRY_PWD', usernameVariable: 'DOCKER_REGISTRY_USER')]) {
+                docker.withRegistry( '', "dockerhub-credentials" ) {
                     sh 'docker push foobarfarm/ticket-frontend:0.1.0'
                 }
+                
             }
         }
 
