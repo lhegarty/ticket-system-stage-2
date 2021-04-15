@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
   - name: ticket-backend-container
-    image: foobarfarm/ticket-backend:0.1.1
+    image: foobarfarm/ticket-backend:0.1.2
     ports:
     - containerPort: 8080
     env:
