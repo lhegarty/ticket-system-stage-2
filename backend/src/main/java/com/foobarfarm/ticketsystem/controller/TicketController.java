@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(value="/api")
 public class TicketController {
     @Autowired
     private TicketService ticketService;
