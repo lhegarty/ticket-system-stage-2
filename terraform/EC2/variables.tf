@@ -1,7 +1,7 @@
 variable "instance_type" {
     description = "Instance type for EC2 machine"
     type = string
-    default = "t2.micro"
+    default = "t2.large"
 }
 
 variable "ami" {
@@ -9,3 +9,7 @@ variable "ami" {
     type = string
     default = "ami-08bac620dc84221eb"
 }
+
+ variable "subnet_id" {
+    type = string
+ }
