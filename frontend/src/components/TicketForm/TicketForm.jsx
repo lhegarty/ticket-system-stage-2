@@ -33,7 +33,7 @@ export default class TicketForm extends React.Component {
     fetchTicketData = (id) => {
         axios
             .get(
-                `${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/getTicketById/${id}`,
+                `${process.env.REACT_APP_API_URL}/getTicketById/${id}`,
                 { timeout: 1000 }
             )
             .then((response) => {
@@ -67,7 +67,7 @@ export default class TicketForm extends React.Component {
     createTicket = (formData) => {
         axios
             .post(
-                `${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/createTicket`,
+                `${process.env.REACT_APP_API_URL}/createTicket`,
                 formData,
                 { timeout: 1000 }
             )
@@ -95,7 +95,7 @@ export default class TicketForm extends React.Component {
     updateTicket = (formData) => {
         axios
             .put(
-                `${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/updateTicket/${this.state.id}`,
+                `${process.env.REACT_APP_API_URL}/updateTicket/${this.state.id}`,
                 formData,
                 { timeout: 1000 }
             )

@@ -25,4 +25,6 @@ COPY --from=build-stage /app/target/ ./target
 
 ENV JAR_FILE=/app/target/*.jar
 
+EXPOSE 8080
+
 ENTRYPOINT java -jar ${JAR_FILE}

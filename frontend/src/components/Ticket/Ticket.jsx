@@ -24,7 +24,7 @@ export default class Ticket extends React.Component {
         // call delete resource
         axios
             .delete(
-                `${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/deleteTicket/${this.state.data.id}`
+                `${process.env.REACT_APP_API_URL}/deleteTicket/${this.state.data.id}`
             )
             .then((response) => {
                 // success

@@ -25,7 +25,7 @@ export default class TicketOverview extends React.Component {
     async fetchTickets() {
         axios
             .get(
-                `${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/getAllTickets`,
+                `${process.env.REACT_APP_API_URL}/getAllTickets`,
                 { timeout: 1000 }
             )
             .then((response) => {
