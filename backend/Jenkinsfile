@@ -28,14 +28,14 @@ pipeline {
                 echo 'Deploying K8s resources'
 
                 // create Secret using values from Jenkins credentials
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "database-credentials",
-                usernameVariable: 'DB_HOSTNAME', passwordVariable: 'DB_PASSWORD']]) {
-                    sh './kubernetes/scripts/exec-kubectl.sh ${DB_HOSTNAME} ${DB_PASSWORD} ./kubernetes/db-secret.yaml'
-                }
+                // withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "database-credentials",
+                // usernameVariable: 'DB_HOSTNAME', passwordVariable: 'DB_PASSWORD']]) {
+                //     sh './kubernetes/scripts/exec-kubectl.sh ${DB_HOSTNAME} ${DB_PASSWORD} ./kubernetes/db-secret.yaml'
+                // }
 
-                sh 'kubectl apply -f ./kubernetes/backend-pod.yaml'
+                // sh 'kubectl apply -f ./kubernetes/backend-pod.yaml'
 
-                sh 'kubectl apply -f ./kubernetes/backend-clusterip.yaml'
+                // sh 'kubectl apply -f ./kubernetes/backend-clusterip.yaml'
             }
         }
     }
