@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend
+  labels:
+    app: ticket-frontend
+spec:
+  containers:
+  - name: ticket-frontend-container
+    image: foobarfarm/ticket-frontend:0.1.5
+    ports:
+    - containerPort: 80
+    env:
+    - name: DB_URI
+      value: "foo"

@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building'
+
+                sh 'docker build -t foobarfarm/ticket-frontend:0.1.5 ./frontend' 
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'testing'
+                sh 'npm install --prefix ./frontend --silent'
+                sh 'npm test --prefix ./frontend -- --watchAll=false'
+                sh 'rm -r ./frontend/node_modules'
+            }
+       
+        }
+
+        stage('Push Image to Docker Hub') {
+            steps {
+                echo 'Pushing image to DockerHub'
+
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "dockerhub-credentials",
+                usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                    sh 'docker login -u ${USERNAME} -p ${PASSWORD}'
+                    sh 'docker push foobarfarm/ticket-frontend:0.1.5'
+                 }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying K8s resources'
+
+                // sh 'kubectl apply -f ./kubernetes/frontend-pod.yaml'
+
+                // sh 'kubectl apply -f ./kubernetes/nginx-reverse-proxy-pod.yaml'
+
+                // sh 'kubectl apply -f ./kubernetes/frontend-clusterip.yaml'
+
+                // sh 'kubectl apply -f kubernetes/nginx-reverse-proxy-load-balancer.yaml'
+            }
+        }
+    }
+}
