@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# delete secrets
+for FILE in *-secret.yaml;
+    do
+        kubectl delete -f $FILE;
+    done
+
 # delete pods
 for FILE in *-pod.yaml;
     do

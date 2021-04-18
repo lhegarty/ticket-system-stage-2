@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# create secrets
+for FILE in *-secret.yaml;
+    do
+        kubectl apply -f $FILE;
+    done
+
 # create pods
 for FILE in *-pod.yaml;
     do
