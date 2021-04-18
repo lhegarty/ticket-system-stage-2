@@ -9,7 +9,7 @@ export default class NavigationBar extends React.Component {
             <>
                 <Navbar bg="light" expand="lg">
                     <Link to="/" className="navbar-brand">
-                        Ticket App
+                        Foo App
                     </Link>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
