@@ -1,0 +1,1 @@
+kubectl apply -f <(cat $3 | sed "s/db_hostname/$1/" | sed "s/db_password/$2/")
