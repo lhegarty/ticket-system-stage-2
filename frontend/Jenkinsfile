@@ -36,13 +36,13 @@ pipeline {
             steps {
                 echo 'Deploying K8s resources'
 
-                sh 'kubectl apply -f ./kubernetes/frontend-pod.yaml'
+                sh 'sudo kubectl apply -f ./kubernetes/frontend-pod.yaml'
 
-                sh 'kubectl apply -f ./kubernetes/nginx-reverse-proxy-pod.yaml'
+                sh 'sudo kubectl apply -f ./kubernetes/nginx-reverse-proxy-pod.yaml'
 
-                sh 'kubectl apply -f ./kubernetes/frontend-clusterip.yaml'
+                sh 'sudo kubectl apply -f ./kubernetes/frontend-clusterip.yaml'
 
-                sh 'kubectl apply -f ./kubernetes/nginx-reverse-proxy-load-balancer.yaml'
+                sh 'sudo kubectl apply -f ./kubernetes/nginx-reverse-proxy-load-balancer.yaml'
             }
         }
     }
